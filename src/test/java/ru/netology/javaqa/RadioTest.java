@@ -11,13 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class RadioTest {
 
     @ParameterizedTest
-    @CsvSource({"0", "5", "9"})
+    @CsvSource({"0, 0", "5, 5", "9, 9"})
 
-    void setRadioStation(int currentRadioStation) {
+    void setRadioStation(int currentRadioStation , int expected) {
         Radio radio = new Radio();
         radio.setRadioStation(currentRadioStation);
 
-        int expected = currentRadioStation;
         int actual = radio.getCurrentRadioStation();
 
         Assertions.assertEquals(expected, actual);
@@ -49,36 +48,39 @@ class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    void setSoundVolume() {
-        Radio radio = new Radio();
-        radio.setVolume(50);
+    @ParameterizedTest
+    @CsvSource({"0, 0", "50, 50", "100, 100"})
 
-        int expected = 50;
+    void setSoundVolume(int currentVolume, int expected) {
+        Radio radio = new Radio();
+        radio.setVolume(currentVolume);
+
         int actual = radio.getVolume();
 
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    void increaseVolume() {
+    @ParameterizedTest
+    @CsvSource({"0, 1", "50, 51"})
+
+    void increaseVolume(int currentVolume, int expected) {
         Radio radio = new Radio();
-        radio.setVolume(50);
+        radio.setVolume(currentVolume);
         radio.increaseVolume();
 
-        int expected = 51;
         int actual = radio.getVolume();
 
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    void decreaseVolume() {
+    @ParameterizedTest
+    @CsvSource({"50, 49", "100, 99"})
+
+    void decreaseVolume(int currentVolume, int expected) {
         Radio radio = new Radio();
-        radio.setVolume(50);
+        radio.setVolume(currentVolume);
         radio.decreaseVolume();
 
-        int expected = 49;
         int actual = radio.getVolume();
 
         Assertions.assertEquals(expected, actual);
